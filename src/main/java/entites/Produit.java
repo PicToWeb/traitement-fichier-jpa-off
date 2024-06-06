@@ -80,6 +80,11 @@ public class Produit {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "Produit [id=" + id + ", nom=" + nom + ", nutritionGradeFr=" + nutritionGradeFr + ", categorie="
+				+ categorie + ", marque=" + marque + getCategorie().getNom() + getIngredients().toString() + "]  \n";
+	}
 	
 
 
@@ -170,11 +175,7 @@ public class Produit {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Produit [id=" + id + ", nom=" + nom + ", nutritionGradeFr=" + nutritionGradeFr + ", categorie="
-				+ categorie + ", marque=" + marque + getCategorie().getNom() + "]  \n";
-	}
+	
 	
 	
 	

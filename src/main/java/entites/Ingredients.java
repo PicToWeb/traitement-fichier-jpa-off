@@ -34,6 +34,11 @@ public class Ingredients {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Ingredients [nom=" + nom + "]";
+	}
+
 	/**
 	 * Constructor
 	 * 

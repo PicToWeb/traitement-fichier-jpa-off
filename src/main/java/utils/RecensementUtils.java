@@ -11,6 +11,10 @@ import org.apache.commons.io.FileUtils;
 
 import entites.Produit;
 import entites.Recensement;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 
 
 
@@ -29,8 +33,15 @@ public class RecensementUtils {
 	public static Recensement lire(String cheminFichier){
 		Recensement recensement = new Recensement();
 		
+		
+		
 		List<String> lignes = null;
 		try {
+//			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("openFoodFact");
+//			EntityManager em = entityManagerFactory.createEntityManager();
+//			
+//			EntityTransaction transaction = em.getTransaction();
+			
 			File file = new File(cheminFichier);
 			lignes = FileUtils.readLines(file, "UTF-8");
 			
@@ -40,16 +51,19 @@ public class RecensementUtils {
 			for (String ligne: lignes){
 				
 				ParseurProduit.ajoutLigne(recensement, ligne);
+				
 				System.out.println(recensement.getProduits().toString());
 				}
 			
 			
 			return recensement;
 			
+			
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 			return null;
 		}
+		
 		
 	}
 }
