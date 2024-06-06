@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categorie")
+@Table(name = "allergenes")
 public class Allergenes {
 
 	@Id
@@ -23,7 +23,7 @@ public class Allergenes {
 	private String nom;
 
 	@ManyToMany
-	@JoinTable(name = "prod_allergene", joinColumns = @JoinColumn(name = "id_allergene", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_prod", referencedColumnName = "id"))
+	@JoinTable(name = "prod_allergene", joinColumns = @JoinColumn(name = "id_allergene", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"))
 	private Set<Produit> produits = new HashSet<>();
 
 	/**

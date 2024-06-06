@@ -1,8 +1,11 @@
 package entites;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
+import fr.diginamic.recensement.Exception.MessageException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,8 +26,8 @@ public class Produit {
 	private int id;
 	private String nom;
 	
-	@Column(name="nutrition_grade_fr")
-	private char nutritionGradeFr;
+	@Column(name="nutrition_grade_fr",length=5)
+	private String nutritionGradeFr;
 
 	
 	@ManyToOne
@@ -36,11 +39,11 @@ public class Produit {
 	private Marque marque;
 	
 	@ManyToMany
-	@JoinTable(name = "prod_ingredients", joinColumns = @JoinColumn(name = "id_prod", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_ing", referencedColumnName = "id"))
+	@JoinTable(name = "prod_ingredients", joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_ing", referencedColumnName = "id"))
 	private Set<Ingredients> ingredients = new HashSet<>();
 	
 	@ManyToMany
-	@JoinTable(name = "prod_allergene", joinColumns = @JoinColumn(name = "id_prod", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_allergene", referencedColumnName = "id"))
+	@JoinTable(name = "prod_allergene", joinColumns = @JoinColumn(name = "id_produit", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_allergene", referencedColumnName = "id"))
 	private Set<Allergenes> allergenes = new HashSet<>();
 
 	/** Constructor
@@ -54,11 +57,30 @@ public class Produit {
 	/** Constructor
 	 * @param nom
 	 */
-	public Produit(String nom) {
-		super();
+	public Produit(String nom,String grade) {
 		this.nom = nom;
+		this.nutritionGradeFr=grade;
+	}
+	
+	public void traiter(Recensement prod,String ajout) {
+
+
+		boolean villeExist = false;
+		List<Produit> produits = prod.getProduits();
+		for (Produit produit : produits) {
+			if (produit.getNom().equalsIgnoreCase(ajout)
+					|| produit.getNom().toLowerCase().startsWith(ajout.toLowerCase())) {
+				villeExist = true;
+				System.out.println(produit);
+			}
+		}
+//		if (!villeExist) {
+//			throw new MessageException("Le ville n'est pas reconnu");
+//		}
+		
 	}
 
+	
 
 
 	/** Getter for nom
@@ -130,6 +152,31 @@ public class Produit {
 	public void setAllergenes(Set<Allergenes> allergenes) {
 		this.allergenes = allergenes;
 	}
+
+
+	/** Getter for nutritionGradeFr
+	 * @return the nutritionGradeFr
+	 */
+	public String getNutritionGradeFr() {
+		return nutritionGradeFr;
+	}
+
+
+	/** Setter for nutritionGradeFr
+	 * @param nutritionGradeFr the nutritionGradeFr to set
+	 */
+	public void setNutritionGradeFr(String nutritionGradeFr) {
+		this.nutritionGradeFr = nutritionGradeFr;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Produit [id=" + id + ", nom=" + nom + ", nutritionGradeFr=" + nutritionGradeFr + ", categorie="
+				+ categorie + ", marque=" + marque + getCategorie().getNom() + "]  \n";
+	}
+	
+	
 	
 	
 	

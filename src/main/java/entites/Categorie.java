@@ -64,6 +64,11 @@ public class Categorie {
 	public void setProduits(Set<Produit> produits) {
 		this.produits = produits;
 	}
+
+	@Override
+	public String toString() {
+		return "Categorie [nom=" + nom + "]";
+	}
 	
 	
 	
